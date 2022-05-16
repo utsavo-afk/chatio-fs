@@ -1,21 +1,10 @@
-import { Heading, VStack } from '@chakra-ui/react';
 import { LoginForm } from '@src/components';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-	return (
-		<VStack
-			as="form"
-			w={{ base: '90%', md: '500px' }}
-			m="auto"
-			justify="center"
-			h="100vh"
-			spacing="1rem"
-		>
-			<Heading>Log In</Heading>
-			<LoginForm />
-		</VStack>
-	);
+	const navigate = useNavigate();
+	return <LoginForm navigate={navigate} />;
 };
 
 export default LoginPage;

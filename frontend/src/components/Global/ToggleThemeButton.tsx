@@ -8,9 +8,9 @@ const ToggleThemeButton = () => {
 	return (
 		<Button pos="absolute" top="0" right="0" m="1rem" onClick={() => toggleColorMode()}>
 			{colorMode === 'dark' ? (
-				<SunIcon color="orange.400" />
+				<SunIcon color="white.400" />
 			) : (
-				<MoonIcon color="purple.600" />
+				<MoonIcon color="black.600" />
 			)}
 		</Button>
 	);

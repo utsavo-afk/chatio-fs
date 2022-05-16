@@ -9,14 +9,13 @@ const theme = {
 		global: {
 			body: {
 				margin: 0,
-				'font-family':
+				fontFamily:
 					"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif",
-				'-webkit-font-smoothing': 'antialiased',
-				'-moz-osx-font-smoothing': 'grayscale',
+				WebkitFontSmoothing: 'antialiased',
+				MozOsxFontSmoothing: 'grayscale',
 			},
 			code: {
-				'font-family':
-					"source-code-pro, Menlo, Monaco, Consolas, 'Courier new', monospace",
+				fontFamily: "source-code-pro, Menlo, Monaco, Consolas, 'Courier new', monospace",
 			},
 		},
 	},

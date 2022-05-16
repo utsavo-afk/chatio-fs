@@ -5,7 +5,7 @@ import { Navigation } from './navigation';
 
 const App = () => {
 	return (
-		<div>
+		<div className="app">
 			<ToggleThemeBtn />
 			<Navigation />
 		</div>

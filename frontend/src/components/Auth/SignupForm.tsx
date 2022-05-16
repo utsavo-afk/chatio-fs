@@ -1,7 +1,72 @@
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import { Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react';
+import { Form, Formik } from 'formik';
 import React from 'react';
+import { NavigateFunction } from 'react-router-dom';
+import * as Yup from 'yup';
 
-const SignupForm = () => {
-	return <p>SignupForm</p>;
+import FormTextField from '../FormTextField';
+
+export type SignupFormProps = {
+	navigate: NavigateFunction;
+};
+
+const SignupForm = ({ navigate }: SignupFormProps) => {
+	return (
+		<Formik
+			initialValues={{ username: '', password: '' }}
+			validationSchema={Yup.object({
+				username: Yup.string()
+					.required('Username required.')
+					.min(6, 'Username too short.')
+					.max(28, 'Username too long.'),
+				password: Yup.string()
+					.required('Password required.')
+					.min(6, 'Password too short.')
+					.max(28, 'Password too long.'),
+			})}
+			onSubmit={(values, actions) => {
+				alert(JSON.stringify(values, null, 2));
+				actions.resetForm();
+			}}
+		>
+			{(formik) => (
+				<VStack
+					as={Form}
+					w={{ base: '90%', md: '500px' }}
+					m="auto"
+					justify="center"
+					h="100vh"
+					spacing="1rem"
+					onSubmit={() => formik.handleSubmit()}
+				>
+					<Heading>Sign Up</Heading>
+					<FormTextField
+						name="username"
+						label="Username"
+						placeholder="Enter username"
+						autoComplete="off"
+					/>
+
+					<FormTextField
+						name="password"
+						label="Password"
+						placeholder="Enter username"
+						autoComplete="off"
+						type={'password'}
+					/>
+					<ButtonGroup pt={5}>
+						<Button colorScheme={'teal'} type={'submit'}>
+							Create Account
+						</Button>
+						<Button leftIcon={<ArrowBackIcon />} onClick={() => navigate('/login')}>
+							Back
+						</Button>
+					</ButtonGroup>
+				</VStack>
+			)}
+		</Formik>
+	);
 };
 
 export default SignupForm;
