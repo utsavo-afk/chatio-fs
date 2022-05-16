@@ -1,9 +1,10 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react';
+import { AuthService, SignupUser } from '@src/api/auth';
+import { signupSchema } from '@src/validation/auth';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import * as Yup from 'yup';
 
 import FormTextField from '../FormTextField';
 
@@ -14,20 +15,13 @@ export type SignupFormProps = {
 const SignupForm = ({ navigate }: SignupFormProps) => {
 	return (
 		<Formik
-			initialValues={{ username: '', password: '' }}
-			validationSchema={Yup.object({
-				username: Yup.string()
-					.required('Username required.')
-					.min(6, 'Username too short.')
-					.max(28, 'Username too long.'),
-				password: Yup.string()
-					.required('Password required.')
-					.min(6, 'Password too short.')
-					.max(28, 'Password too long.'),
-			})}
-			onSubmit={(values, actions) => {
+			initialValues={{ username: '', password: '', email: '', password2: '' }}
+			validationSchema={signupSchema}
+			onSubmit={async (values, actions) => {
 				alert(JSON.stringify(values, null, 2));
 				actions.resetForm();
+				const response = await AuthService.signup({ ...values } as SignupUser);
+				console.log(response);
 			}}
 		>
 			{(formik) => (
@@ -37,7 +31,7 @@ const SignupForm = ({ navigate }: SignupFormProps) => {
 					m="auto"
 					justify="center"
 					h="100vh"
-					spacing="1rem"
+					spacing="1.2rem"
 					onSubmit={() => formik.handleSubmit()}
 				>
 					<Heading>Sign Up</Heading>
@@ -49,12 +43,28 @@ const SignupForm = ({ navigate }: SignupFormProps) => {
 					/>
 
 					<FormTextField
+						name="email"
+						label="Email"
+						placeholder="jane.doe@example.com"
+						autoComplete="on"
+					/>
+
+					<FormTextField
 						name="password"
 						label="Password"
-						placeholder="Enter username"
+						placeholder="Enter password"
 						autoComplete="off"
 						type={'password'}
 					/>
+
+					<FormTextField
+						name="password2"
+						label="Confirm Password"
+						placeholder="Re-enter password"
+						autoComplete="off"
+						type={'password'}
+					/>
+
 					<ButtonGroup pt={5}>
 						<Button colorScheme={'teal'} type={'submit'}>
 							Create Account

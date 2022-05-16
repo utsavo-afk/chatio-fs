@@ -1,8 +1,9 @@
 import { Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react';
+import { AuthService, LoginUser } from '@src/api/auth';
+import { loginSchema } from '@src/validation/auth';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import * as Yup from 'yup';
 
 import FormTextField from '../FormTextField';
 
@@ -14,19 +15,11 @@ const LoginForm = ({ navigate }: LoginFormProps) => {
 	return (
 		<Formik
 			initialValues={{ username: '', password: '' }}
-			validationSchema={Yup.object({
-				username: Yup.string()
-					.required('Username required.')
-					.min(6, 'Username too short.')
-					.max(28, 'Username too long.'),
-				password: Yup.string()
-					.required('Password required.')
-					.min(6, 'Password too short.')
-					.max(28, 'Password too long.'),
-			})}
-			onSubmit={(values, actions) => {
-				alert(JSON.stringify(values, null, 2));
+			validationSchema={loginSchema}
+			onSubmit={async (values, actions) => {
 				actions.resetForm();
+				const response = await AuthService.login({ ...values } as LoginUser);
+				console.log(response);
 			}}
 		>
 			{(formik) => (
